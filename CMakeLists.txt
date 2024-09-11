@@ -36,3 +36,5 @@ catkin_package(
 add_executable(data_pub  src/data_pub.cpp)
 target_link_libraries(data_pub ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${EIGEN_LIBS})
 
+add_executable(read_img_mocap  src/read_img_mocap.cpp)
+target_link_libraries(read_img_mocap ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${EIGEN_LIBS})
