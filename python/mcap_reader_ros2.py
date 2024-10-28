@@ -38,25 +38,32 @@ def main():
         "input", help="input bag path (folder or filepath) to read from"
     )
     
-    f = open("gt_data.txt", "w")
+    f_gt = open("gt_data.txt", "w")
+    f_imu = open("imu_data.txt", "w")
 
     args = parser.parse_args()
     for topic, msg, timestamp in read_messages(args.input):
         if isinstance(msg, Imu):
             # print(f"{topic} [{timestamp}]: '{msg}'")
-            print("imu msg")
+            print(topic)
+            time = msg.stamp.sec + 1e-9 * msg.stamp.nanosec
+            f_imu.write(str(time) + " ")
+            f_imu.write(str(msg.gyro_x) + " " + str(msg.gyro_y) + " " + str(msg.gyro_z) + " ")
+            f_imu.write(str(msg.accel_x) + " " + str(msg.accel_y) + " " + str(msg.accel_z))
+            f_imu.write("\n")
         elif isinstance(msg, PoseStamped):
             # print(f"{topic} [{timestamp}]: '{msg}'")
             print(topic)
             time = msg.header.stamp.sec + 1e-9 * msg.header.stamp.nanosec
-            f.write(str(time) + " ")
-            f.write(str(msg.pose.position.x) + " " + str(msg.pose.position.y) + " " + str(msg.pose.position.z) + " ")
-            f.write(str(msg.pose.orientation.x) + " " + str(msg.pose.orientation.y) + " " + str(msg.pose.orientation.z) + " " + str(msg.pose.orientation.w))
-            f.write("\n")
+            f_gt.write(str(time) + " ")
+            f_gt.write(str(msg.pose.position.x) + " " + str(msg.pose.position.y) + " " + str(msg.pose.position.z) + " ")
+            f_gt.write(str(msg.pose.orientation.x) + " " + str(msg.pose.orientation.y) + " " + str(msg.pose.orientation.z) + " " + str(msg.pose.orientation.w))
+            f_gt.write("\n")
         else:
             # print(f"{topic} [{timestamp}]: ({type(msg).__name__})")
             print("other msg")
-    f.close()
+    f_gt.close()
+    f_imu.close()
 
 
 if __name__ == "__main__":
