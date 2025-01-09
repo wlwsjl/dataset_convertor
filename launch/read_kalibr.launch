@@ -1,0 +1,15 @@
+<launch>
+    <arg name="dataset_name" default="tum"/>
+    <arg name="img_freq" default="5"/>
+    <arg name="td" default="50"/>
+    <!-- <arg name="calibration_file" default="/home/junlin/GNSS/eval/VI-Calib/Kalibr/tum/5_10.yaml"/> -->
+    
+    <node pkg="dataset_convertor" type="read_kalibr" name="read_kalibr" output="screen" required="true">
+        <param name="dataset_name" value="$(arg dataset_name)"/>
+        <param name="img_freq" value="$(arg img_freq)"/>
+        <param name="td" value="$(arg td)"/>
+        <!-- Calibration parameters -->
+        <rosparam command="load" file="/home/junlin/GNSS/eval/VI-Calib/Kalibr/$(arg dataset_name)/$(arg img_freq)_$(arg td).yaml"/>
+    </node>
+
+</launch>

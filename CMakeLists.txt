@@ -47,3 +47,6 @@ target_link_libraries(read_imu_mocap ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${E
 
 add_executable(transform  src/transform.cpp)
 target_link_libraries(transform ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${EIGEN_LIBS})
+
+add_executable(read_kalibr  src/read_kalibr.cpp)
+target_link_libraries(read_kalibr ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${EIGEN_LIBS})
